@@ -1,42 +1,46 @@
 from django.db import models
 
-# Create your models here.
+# New Models (just KYC)
 
 class Document(models.Model):
-  _id
-  _customer # Customer::_id
-  _category # KYC, Report, Claims, Diagnoses
-  _doctype # [Passport, Licence,], [Data, Receipts,], [Bills, Prescriptions,], [Notes, Prescriptions,]
-  _filetype # [PDF, img, hOCR, LaTeX,]
-  size
-  name
-  location
+  DOCS = (
+    ('PASS', 'passport'),
+    ('DVLS', 'driving licence')
+  ); doctype = models.CharField(max_length=4, choices=DOCS)
+  FILES = (
+    ('PDF', 'PDF'),
+    ('IMG', 'Image')
+  ); filetype = models.CharField(max_length=3, choices=FILES)
+  LOC = (
+    ('TEXT', 'File Extracted'),
+    ('FILE', 'File Stored')
+  ); access = models.CharField(max_length=4, choices=LOC)
+  
+  location = models.CharField(max_length=47)
+  hashcode = models.TextField()
+  
+  _person = models.ForeignKey(
+    'Person',
+    on_delete=models.CASCADE # TODO
+  )
 
 
-class Customer(models.Model): # Insurer
-  _id
-  _data # Analytics of customer
-  _info # Info::_id
-  _doclist # [Document::_id,]
-  _pref # Preferences::_id
+class Person(models.Model):
+  name = models.CharField(max_length=47,blank=False)
+  dob = mdoels.DateField()
+  permanent = models.TextField()
+  current = models.TextField()
 
+  docs = models.ArrayField(
+    models.ForeignKey(
+      'Document',
+      on_delete=models.CASCADE # TODO
+    )
+  )
+  links = models.ArrayField(
+    models.ForeignKey(
+      'Person',
+      on_delete=models.CASCADE # TODO
+    )
+  )
 
-
-class Info(models.Model): # Modularity for analytics
-  _id
-  _date # Last update
-  _action # (CREATE,UPDATE,DELETE)
-  _human # (Customer::_id,)
-  _kyc # [KYC::_id,]
-  _finance # [Bank::_id]
-  name
-  dob
-  permanent # address
-  current # address
-
-class KYC(models.Model):
-  _id
-  _doc # Document::_id
-  _type # [Passport,AADHAR,Licence,]
-  number
-  verify # Place to check the number; most online

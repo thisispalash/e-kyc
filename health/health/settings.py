@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'health.wsgi.application'
+ASGI_APPLICATION = 'health.asgi.application'
 
 
 # Database
@@ -84,7 +85,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
-}
+} # Create user in local postgres server before developing
 
 
 # Password validation
