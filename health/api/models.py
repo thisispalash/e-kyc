@@ -27,20 +27,9 @@ class Document(models.Model):
 
 class Person(models.Model):
   name = models.CharField(max_length=47,blank=False)
-  dob = mdoels.DateField()
+  dob = models.DateField()
   permanent = models.TextField()
   current = models.TextField()
 
-  docs = models.ArrayField(
-    models.ForeignKey(
-      'Document',
-      on_delete=models.CASCADE # TODO
-    )
-  )
-  links = models.ArrayField(
-    models.ForeignKey(
-      'Person',
-      on_delete=models.CASCADE # TODO
-    )
-  )
-
+  docs = models.ManyToManyField(Document)
+  links = models.ManyToManyField('self')
