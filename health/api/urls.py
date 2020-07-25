@@ -1,6 +1,11 @@
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import TemplateView
+from rest_framework import routers
+
+from . import views
 
 urlpatterns = [
-  path('upload/', TemplateView.as_view()),
+  # path('upload/', TemplateView.as_view()),
+  path('persons', views.person_list),
+  path('persons/<key>', views.person_info),  
 ]
