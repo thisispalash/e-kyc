@@ -21,7 +21,7 @@ LOC = (
 class Document(models.Model):
   doctype = models.CharField(max_length=3, choices=DOCS)
   filetype = models.CharField(max_length=3, choices=FILES)
-  hashcode = models.TextField() # To check for tempering
+  hashcode = models.TextField() # To check for tempering - md5?
   uploaded = models.DateTimeField(auto_now_add=True) # Automatically adds datetime of creation
   
   access = models.CharField(max_length=4, choices=LOC)

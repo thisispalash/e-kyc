@@ -7,5 +7,6 @@ from . import views
 urlpatterns = [
   # path('upload/', TemplateView.as_view()),
   path('persons', views.person_list),
+  path('docs', views.document_list),
   path('persons/<key>', views.person_info),  
 ]

@@ -21,7 +21,7 @@ def person_list(req):
   """
 
   if req.method == 'GET':
-    persons = models.Person.objects.all()
+    persons = models.Person.objects.all() # TODO privilige check
     serializer = serializers.PersonSerializer(persons, many=True)
     return JsonResponse(serializer.data, safe=False)
 
@@ -57,4 +57,24 @@ def person_info(req,key):
 
   elif req.method == 'DELETE':
     person.delete()
-    return HttpResponse(status=204)
+    return HttpResponse(status=204)  
+
+
+@csrf_exempt
+def document_list(req):
+  """
+  List all documents in DB or create new entry
+  """
+
+  if req.method == 'GET':
+    docs = models.Document.objects.all() # TODO privilige check
+    serializer = serializers.DocumentSerializer(docs, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+  elif req.method == 'POST':
+    data = JSONParser().parse(req)
+    serializer = serializers.DocumentSerializer(data=data)
+    if serializer.is_valid():
+      serializer.save()
+      return JsonResponse(serializer.data, status=201)
+    return JsonResponse(serializer.errors, status=400)

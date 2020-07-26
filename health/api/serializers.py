@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from . import models
 
 class PersonSerializer(serializers.Serializer):
   name = serializers.CharField()
@@ -17,8 +18,8 @@ class PersonSerializer(serializers.Serializer):
     view_name='doctype'
   )
 
-# class DocumentSerializer(serializers.Serializer):
-#   person = 
-#   class Meta:
-#     model = Document
-#     fields = ['doctype', 'uploaded', 'hashcode', '_person']
+class DocumentSerializer(serializers.ModelSerializer):
+  _person = serializers.StringRelatedField()
+  class Meta:
+    model = models.Document
+    fields = ['doctype', '_person', 'uploaded']
