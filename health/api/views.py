@@ -8,46 +8,28 @@ from rest_framework.parsers import JSONParser
 from . import models, serializers
 
 
-# Create your views here.
-
-# class PersonViewSet(viewsets.ModelViewSet):
-#   queryset = models.Person.objects.all().order_by('dob')
-#   serializer_class = serializers.PersonSerializer
-  
 @csrf_exempt
-def person_list(req):
-  """
-  List all persons in DB or create new entry
-  """
+class PersonView(View):
 
-  if req.method == 'GET':
+  def get(self, req): # get-all
     persons = models.Person.objects.all() # TODO privilige check
     serializer = serializers.PersonSerializer(persons, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-  elif req.method == 'POST':
+  def post(self, req): # add-one
     data = JSONParser().parse(req)
     serializer = serializers.PersonSerializer(data=data)
     if serializer.is_valid():
       serializer.save()
       return JsonResponse(serializer.data, status=201)
     return JsonResponse(serializer.errors, status=400)
+  
+  def put(self, req, key): # update-one
+    try:
+      person = models.Person.objects.get(key=key)
+    except models.Person.DoesNotExist:
+      return HttpResponse(status=404)
 
-@csrf_exempt
-def person_info(req,key):
-  """
-  Retrieve, update or delete a code snippet.
-  """
-  try:
-    person = models.Person.objects.get(key=key)
-  except models.Person.DoesNotExist:
-    return HttpResponse(status=404)
-
-  if req.method == 'GET':
-    serializer = serializers.PersonSerializer(person)
-    return JsonResponse(serializer.data)
-
-  elif req.method == 'PUT':
     data = JSONParser().parse(req)
     serializer = serializers.PersonSerializer(person, data=data)
     if serializer.is_valid():
@@ -55,9 +37,23 @@ def person_info(req,key):
       return JsonResponse(serializer.data)
     return JsonResponse(serializer.errors, status=400)
 
-  elif req.method == 'DELETE':
+  def delete(self, req, key):
+    try:
+      person = models.Person.objects.get(key=key)
+    except models.Person.DoesNotExist:
+      return HttpResponse(status=404)
+
     person.delete()
     return HttpResponse(status=204)  
+
+  def info(self, req, key): # get-one
+    try:
+      person = models.Person.objects.get(key=key)
+    except models.Person.DoesNotExist:
+      return HttpResponse(status=404)
+
+      serializer = serializers.PersonSerializer(person)
+      return JsonResponse(serializer.data)
 
 
 @csrf_exempt
