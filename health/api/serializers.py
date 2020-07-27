@@ -3,7 +3,7 @@ from . import models
 
 class PersonSerializer(serializers.Serializer):
   name = serializers.CharField()
-  address = serializers.CharField()
+  current = serializers.CharField()
   dob = serializers.DateField()
   created = serializers.DateTimeField(read_only=True)
 

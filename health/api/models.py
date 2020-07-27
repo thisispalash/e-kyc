@@ -40,7 +40,7 @@ class Document(models.Model):
     unique_together = ['doctype', '_person']
 
   def __str__(self):
-    return "%s %s :: %s" % (doctype, uploaded, _person)
+    return "%s %s :: %s" % (self.doctype, self.uploaded, self._person)
 
 class Person(models.Model): # TODO : remove `blank=True` from all
   key = models.SlugField(blank=True) # unique identifier for user reference
@@ -59,4 +59,4 @@ class Person(models.Model): # TODO : remove `blank=True` from all
   links = models.ManyToManyField('self')
 
   def __str__(self):
-    return '%s :: %s' % (name, dob)
+    return '%s :: %s' % (self.name, self.dob)
