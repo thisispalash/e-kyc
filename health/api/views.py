@@ -1,15 +1,16 @@
 from django.http import HttpResponse, JsonResponse
-
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+from django.shortcuts import render
 
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import viewsets
 from rest_framework.parsers import JSONParser
 
-from . import models, serializers
+from . import models, forms, serializers
 
 
 @method_decorator(csrf_exempt, name='dispatch') # TODO : override dispatch to customise requests; maybe
@@ -78,3 +79,29 @@ class DocumentView(View):
       serializer.save()
       return JsonResponse(serializer.data, status=201)
     return JsonResponse(serializer.errors, status=400)
+
+
+
+class LoginView(FormView): # TODO: OAuth w/ REST
+  '''
+  Login view to access db data
+  '''
+  
+  template = 'login.html'
+  success_url = 'api.html'
+
+  context = {
+    'form': forms.LoginForm()
+  }
+
+  def get(self, req):
+    return render(req, self.template, self.context)
+
+  def form_valid(self, form): # ie, called if form.is_valid == True
+    data = form.cleaned_data; print(data)
+    # DB check and store?
+    return super(LoginView,self).form_valid(form)
+  
+  def form_invalid(self, form): # ie, called if form.is_valid == False
+    pass
+

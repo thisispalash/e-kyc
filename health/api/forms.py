@@ -1,14 +1,9 @@
-from django import forms
+from django.forms import ModelForm
 
-from .models import Person
+from .models import Login
 
-class UploadForm(forms.ModelForm):
-  # doctype
-  # file
-  pass
-
-class KYCForm(forms.ModelForm):
+class LoginForm(ModelForm):
   class Meta:
-    model = Person
-    fields = ['name', 'dob', 'permanent', 'current']
-  pass
+    model = Login
+    fields = ['username', 'password']
+
