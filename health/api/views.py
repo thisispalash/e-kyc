@@ -61,8 +61,6 @@ class PersonView(View):
     person.delete()
     return HttpResponse(status=204)
 
-
-
 @method_decorator(csrf_exempt, name='dispatch') # TODO : override dispatch to customise requests; maybe
 class DocumentView(View):
   model = models.Document
@@ -82,26 +80,37 @@ class DocumentView(View):
 
 
 
-class LoginView(FormView): # TODO: OAuth w/ REST
-  '''
-  Login view to access db data
-  '''
+# class LoginView(FormView): # TODO: OAuth w/ REST
+#   '''
+#   Login view to access db data
+#   '''
   
-  template = 'login.html'
-  success_url = 'api.html'
+#   template_name = 'login.html'
+#   success_url = 'api.html'
+#   form_class = forms.LoginForm
+#   context = {
+#     'form': form_class()
+#   }
 
-  context = {
-    'form': forms.LoginForm()
-  }
+#   def get(self, req):
+#     return render(req, self.template_name, self.context)
 
-  def get(self, req):
-    return render(req, self.template, self.context)
-
-  def form_valid(self, form): # ie, called if form.is_valid == True
-    data = form.cleaned_data; print(data)
-    # DB check and store?
-    return super(LoginView,self).form_valid(form)
+#   def form_valid(self, form): # ie, called if form.is_valid == True
+#     data = form.cleaned_data
+#     messages = []
+#     try:
+#       user = models.Login.objects.get(username=data['username'])
+#     except models.Login.DoesNotExist:
+#       messages.append('User not found')
+#       serializer = serializers.LoginSerializer(messages)
+#       return JsonResponse(serializer.errors, safe=False, status=404)
+    
+#     if user.password == data['password']:
+#       return super(LoginView,self).form_valid(form)
+#     else:
+#       self.context.form = forms.LoginForm()
+#       return render(req, self.template_name, self.context)
   
-  def form_invalid(self, form): # ie, called if form.is_valid == False
-    pass
+#   def form_invalid(self, form): # ie, called if form.is_valid == False
+#     pass
 

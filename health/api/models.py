@@ -1,7 +1,5 @@
 from django.db import models
 
-# New Models (just KYC)
-
 DOCS = [
   ('PAS', 'passport'),
   ('DVL', 'driving licence'),
@@ -16,7 +14,7 @@ LOC = [
   ('TEXT', 'File Processed'),
   ('FILE', 'File Stored'),
   ('BOTH', 'File Stored and Processed'),
- ] # Needed?
+] # Needed?
 
 class Document(models.Model):
   doctype = models.CharField(max_length=3, choices=DOCS)
@@ -61,25 +59,25 @@ class Person(models.Model): # TODO : remove `blank=True` from all
   def __str__(self):
     return '%s :: %s' % (self.name, self.dob)
 
-class Login(models.Model):
-  USERS = [
-    ('ADM', 'admin'),
-    ('USR', 'user'),
-    # ('EMP', 'employee'),
-  ]
-  username = models.CharField(max_length=47,blank=False)
-  password = models.CharField(max_length=47,blank=False) # TODO: 
-  usertype = models.CharField(max_length=3,choices=USERS) # admin, user, employee?
-  recovery = models.EmailField() # email address for recovery
+# class Login(models.Model):
+#   USERS = [
+#     ('ADM', 'admin'),
+#     ('USR', 'user'),
+#     # ('EMP', 'employee'),
+#   ]
+#   username = models.CharField(max_length=47,blank=False)
+#   password = models.CharField(max_length=47,blank=False) # TODO: 
+#   usertype = models.CharField(max_length=3,choices=USERS) # admin, user, employee?
+#   recovery = models.EmailField() # email address for recovery
 
-  # created  
-  linked = models.ForeignKey(
-    'Person',
-    on_delete=models.CASCADE # TODO
-  )
+#   # created  
+#   linked = models.ForeignKey(
+#     'Person',
+#     on_delete=models.CASCADE # TODO
+#   )
 
   
-  # sessions # psql Array?
+#   # sessions # psql Array?
 
-  def __str__(self):
-    return '%s :: %s' % (self.username, self.linked)
+#   def __str__(self):
+#     return '%s :: %s' % (self.username, self.linked)
