@@ -1,18 +1,25 @@
 import React, { Component } from 'react' // React for JSX
 
-/* 
- * The Main 
+/*
+ *
  */
-class App extends Component {
+class Message extends Component {
+
+  state = {
+
+  }
   
   render() {
+    
     const {} = this.props
     
     return (
-      <div className='app' >
+      <div className='' >
 
       </div>
     )
     
   }
 }
+
+export default Message
