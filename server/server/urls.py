@@ -18,6 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls), # TODO Make dev only #
-    path('doc/', include('document.urls')),
-    path('img/', include('selfie.urls')),
+    
+    # path('api-auth/', include('rest_framework.urls')),
+    # TODO :: 
+    path('api/', include('api.urls')),
+
 ]
