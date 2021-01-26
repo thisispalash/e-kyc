@@ -1,0 +1,72 @@
+:root {
+  --bg: #eeeeee;
+  --border: #ffffff;
+  --light-shadow-color: #ffffff;
+  --dark-shadow-color: #cfcfcf;
+  
+  --left-shadow:  -0.8vw -0.8vh 1.5rem var(--light-shadow-color);
+  --right-shadow:  0.8vw 0.8vh 1.5rem var(--dark-shadow-color);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+
+
+body {
+  margin:0; padding:0;
+  background: var(--bg);
+  font-family: 'Mulish', sans-serif;
+  font-size: 3vmin;
+  color: #333333;
+}
+
+.neu-outset {
+  background: var(--bg);
+  border: 1vh 1vw solid var(--border);
+  border-radius: 0.5vmax;
+  box-shadow: var(--left-shadow), var(--right-shadow);
+}
+
+.neu-inset {
+  background: var(--bg);
+  border: 1vh 1vw solid var(--border);
+  border-radius: 0.5vmax;
+  box-shadow: var(--left-shadow) inset, var(--right-shadow) inset;
+}
+
+div {
+  margin: 3vh 3vw;
+  padding: 5vh 5vw;
+}
+
+input {
+  all: unset;
+  font-size: 0.8em;
+  margin: 1vh 1vw;
+  padding: 2vh 2vw;
+  display: inline;
+}
+
+input:focus {
+  box-shadow: var(--left-shadow), var(--right-shadow);
+}
+
+button {
+  all: unset;
+  font-size: 0.8em;
+  margin: 1vh 1vw;
+  padding: 1vh 1vw;
+  display: inline;
+}
+
+button:active {
+  box-shadow: var(--left-shadow) inset, var(--right-shadow) inset;
+}
+
+
+
+.container {
+  height: 84vh;
+  width: 84vw;
+  text-align: center;
+  vertical-align: middle;
+}
